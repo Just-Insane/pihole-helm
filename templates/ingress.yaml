@@ -9,13 +9,15 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   rules:
-    - host: {{ .Values.ingress.host }} 
+  {{- range .Values.ingress.hosts }}
+    - host: {{ . | quote }}
       http:
         paths:
           - path: 
             backend:
               serviceName: {{ template "fullname" . }}
               servicePort: 81
+  {{-end }}
     - host: {{ .Values.config.hostname }}
       http:
         paths:

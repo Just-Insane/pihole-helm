@@ -22,12 +22,13 @@ spec:
     port: 53
     targetPort: 53
     protocol: UDP
-  externalIPs: {{ .Values.service.externalIPs }}
-{{- range .Values.service.externalIPs }}
+  {{- if .Values.service.externalIPs.enabled }}
+  {{- range .Values.service.externalIPs.IPs }}
   externalIPs:
     {{- range . }}
     - {{ . | quote }}
     {{- end }}
-{{- end }}
+  {{- end }}
+  {{- end }}
   selector:
     app: {{ template "fullname" . }}

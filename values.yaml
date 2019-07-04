@@ -29,15 +29,18 @@ config:
 service:
   serviceType: LoadBalancer
   externalIPs:
-    - 192.168.1.16
-    - 192.168.1.132
+    enabled: true
+    IPs:
+     - 192.168.1.16
+     - 192.168.1.132
 
 configData: |-
   server=/local/192.168.1.1
   address=/.cminion.cf/192.168.1.132
 
 ingress:
-  host: dns.cminion.cf
+  hosts: 
+    - dns.cminion.cf
   tls:
     - hosts:
       - dns.cminion.cf
