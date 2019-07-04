@@ -16,7 +16,7 @@ spec:
             backend:
               serviceName: {{ template "fullname" . }}
               servicePort: 81
-    - host: pi.hole
+    - host: {{ .Values.config.hostname }}
       http:
         paths:
           - path: 

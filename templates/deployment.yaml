@@ -18,12 +18,12 @@ spec:
       hostAliases:
       - ip: 127.0.0.1
         hostnames:
-        - pi.hole
+        - {{ .Values.config.hostname }}
       nodeSelector:
         kubernetes.io/hostname: randomstore
       containers:
       - name: {{ .Chart.Name }}
-        image: pihole/pihole:4.0.0-1
+        image: {{ .Values.image.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         stdin: true
         tty: true
@@ -34,9 +34,9 @@ spec:
         - name: 'ServerIP'
           value: '0.0.0.0'
         - name: 'DNS1'
-          value: '8.8.8.8'
+          value: {{ .Values.config.DNS1 }}
         - name: 'DNS2'
-          value: '10.0.0.10'
+          value: {{ .Values.config.DNS2 }}
         ports:
         - name: webui
           containerPort: 81 

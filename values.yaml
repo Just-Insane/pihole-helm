@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 image:
+  image: pihole/pihole:4.0.0-1
   pullPolicy: IfNotPresent
 
 persistence:
@@ -11,8 +12,20 @@ persistence:
   keep: false
   ## persistence.accessMode PVC Access Mode
   accessMode: ReadWriteMany
+  ## StorageClass
+  StorageClass: rook-ceph-block
   ## persistence.size PVC Size
   size: 5Gi
+
+config:
+  hostname: pi.hole
+  DNS1: '8.8.8.8'
+  DNS2: '10.0.0.10'
+
+service:
+  externalIPs:
+    - 192.168.1.16
+    - 192.168.1.132
 
 configData: |-
   server=/local/192.168.1.1
