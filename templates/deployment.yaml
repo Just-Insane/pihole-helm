@@ -23,13 +23,12 @@ spec:
         kubernetes.io/hostname: randomstore
       containers:
       - name: {{ .Chart.Name }}
-        image: {{ .Values.image.image }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         stdin: true
         tty: true
         resources:
-          limits:
-            memory: 1Gi
+{{ toYaml .Values.resources | indent 10 }}
         env:
         - name: 'ServerIP'
           value: '0.0.0.0'

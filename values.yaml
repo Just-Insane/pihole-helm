@@ -1,9 +1,13 @@
 # Default values for datapower.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-image:
-  image: pihole/pihole:4.0.0-1
-  pullPolicy: IfNotPresent
+image: pihole
+imageTag: pihole:4.0.0-1
+pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    memory: 1024Mi
 
 persistence:
   ## persistence.enabled Enables persistent volume - PV provisioner support necessary
@@ -23,6 +27,7 @@ config:
   DNS2: '10.0.0.10'
 
 service:
+  serviceType: LoadBalancer
   externalIPs:
     - 192.168.1.16
     - 192.168.1.132
@@ -33,4 +38,6 @@ configData: |-
 
 ingress:
   host: dns.cminion.cf
-
+  tls:
+    - hosts:
+      - dns.cminion.cf

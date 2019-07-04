@@ -8,21 +8,26 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  selector:
-    app: {{ template "fullname" . }} 
+  type: {{ .Values.service.serviceType }}
   ports:
   - name: {{ template "fullname" . }}-webui
     port: 81
     targetPort: 80
-    protocol:   TCP
-  - name:       {{ template "fullname" . }}-dns1
+    protocol: TCP
+  - name: {{ template "fullname" . }}-dns1
     port: 53
     targetPort: 53
-    protocol:   TCP
-  - name:       {{ template "fullname" . }}-dns2
-    port:       53
+    protocol: TCP
+  - name: {{ template "fullname" . }}-dns2
+    port: 53
     targetPort: 53
-    protocol:   UDP
+    protocol: UDP
   externalIPs: {{ .Values.service.externalIPs }}
+{{- range .Values.service.externalIPs }}
+  externalIPs:
+    {{- range . }}
+    - {{ . | quote }}
+    {{- end }}
+{{- end }}
   selector:
     app: {{ template "fullname" . }}
